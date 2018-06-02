@@ -1,4 +1,4 @@
-# travis-scaffoler-javascript
+# travis-scaffolder-javascript
 
 CI scaffolder for JavaScript projects on Travis
 
@@ -14,12 +14,12 @@ CI scaffolder for JavaScript projects on Travis
 [![Commitizen friendly][commitizen-badge]][commitizen-link]
 [![PRs Welcome][PRs-badge]][PRs-link]
 
-[npm-link]: https://www.npmjs.com/package/@travi/travis-scaffoler-javascript
-[npm-badge]: https://img.shields.io/npm/v/@travi/travis-scaffoler-javascript.svg
+[npm-link]: https://www.npmjs.com/package/@travi/travis-scaffolder-javascript
+[npm-badge]: https://img.shields.io/npm/v/@travi/travis-scaffolder-javascript.svg
 [license-link]: LICENSE
-[license-badge]: https://img.shields.io/github/license/travi/travis-scaffoler-javascript.svg
-[ci-link]: https://travis-ci.com/travi/travis-scaffoler-javascript
-[ci-badge]: https://img.shields.io/travis/travi/travis-scaffoler-javascript.svg?branch=master
+[license-badge]: https://img.shields.io/github/license/travi/travis-scaffolder-javascript.svg
+[ci-link]: https://travis-ci.com/travi/travis-scaffolder-javascript
+[ci-badge]: https://img.shields.io/travis/travi/travis-scaffolder-javascript.svg?branch=master
 [commit-convention-link]: https://conventionalcommits.org
 [commit-convention-badge]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg
 [commitizen-link]: http://commitizen.github.io/cz-cli/

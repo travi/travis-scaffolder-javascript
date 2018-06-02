@@ -1,13 +1,13 @@
 {
-  "name": "@travi/travis-scaffoler-javascript",
+  "name": "@travi/travis-scaffolder-javascript",
   "description": "CI scaffolder for JavaScript projects on Travis",
   "version": "0.0.0-semantically-released",
   "main": "lib/index.cjs.js",
   "module": "lib/index.es.js",
   "license": "MIT",
-  "repository": "travi/travis-scaffoler-javascript",
-  "bugs": "https://github.com/travi/travis-scaffoler-javascript/issues",
-  "homepage": "https://npm.im/@travi/travis-scaffoler-javascript",
+  "repository": "travi/travis-scaffolder-javascript",
+  "bugs": "https://github.com/travi/travis-scaffolder-javascript/issues",
+  "homepage": "https://npm.im/@travi/travis-scaffolder-javascript",
   "author": "Matt Travi <npm@travi.org> (https://matt.travi.org/)",
   "scripts": {
     "clean": "rimraf lib/",
