@@ -8,6 +8,7 @@ CI scaffolder for JavaScript projects on Travis
 
 <!-- status badges -->
 [![Build Status][ci-badge]][ci-link]
+[![Codecov](https://img.shields.io/codecov/c/github/travi/travis-scaffolder-javascript.svg)](https://codecov.io/github/travi/travis-scaffolder-javascript)
 
 <!-- contribution badges -->
 [![Conventional Commits][commit-convention-badge]][commit-convention-link]
