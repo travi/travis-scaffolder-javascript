@@ -1,6 +1,6 @@
 # travis-scaffolder-javascript
 
-CI scaffolder for JavaScript projects on Travis
+CI scaffolder for JavaScript projects on [Travis](https:///travis-ci.com)
 
 <!-- consumer badges -->
 [![npm][npm-badge]][npm-link]

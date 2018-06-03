@@ -3,6 +3,7 @@
 /coverage/
 /.nyc_output/
 /.github/
+/third-party-wrappers/
 
 .babelrc
 .commitlintrc.js
