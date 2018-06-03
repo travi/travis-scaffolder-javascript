@@ -2,18 +2,19 @@
 
 CI scaffolder for JavaScript projects on [Travis](https:///travis-ci.com)
 
+<!-- status badges -->
+[![Build Status][ci-badge]][ci-link]
+[![Codecov](https://img.shields.io/codecov/c/github/travi/travis-scaffolder-javascript.svg)](https://codecov.io/github/travi/travis-scaffolder-javascript)
+
 <!-- consumer badges -->
 [![npm][npm-badge]][npm-link]
 [![MIT license][license-badge]][license-link]
-
-<!-- status badges -->
-[![Build Status][ci-badge]][ci-link]
-[![Codecov](https://img.shields.io/codecov/c/github/travi/travis-scaffolder-javascript.svg)](https://codecov.io/github/travi/travis-scaffolder-javascript) [![Greenkeeper badge](https://badges.greenkeeper.io/travi/travis-scaffolder-javascript.svg)](https://greenkeeper.io/)
 
 <!-- contribution badges -->
 [![Conventional Commits][commit-convention-badge]][commit-convention-link]
 [![Commitizen friendly][commitizen-badge]][commitizen-link]
 [![PRs Welcome][PRs-badge]][PRs-link]
+[![Greenkeeper badge](https://badges.greenkeeper.io/travi/travis-scaffolder-javascript.svg)](https://greenkeeper.io/)
 
 [npm-link]: https://www.npmjs.com/package/@travi/travis-scaffolder-javascript
 [npm-badge]: https://img.shields.io/npm/v/@travi/travis-scaffolder-javascript.svg
