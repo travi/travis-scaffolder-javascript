@@ -1,13 +1,21 @@
 language: node_js
 notifications:
   email: false
+branches:
+  except:
+  - "/^v\\d+\\.\\d+\\.\\d+$/"
 before_script:
 - npm ls >/dev/null
 - npm run greenkeeper:update-lockfile
-after_script: 'npm run greenkeeper:upload-lockfile'
+after_script: npm run greenkeeper:upload-lockfile
 after_success: npm run coverage:report
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: npx semantic-release
 env:
   global:
-    - FORCE_COLOR=1
-    - NPM_CONFIG_COLOR=always
-    - GK_LOCK_COMMIT_AMEND=true
+  - FORCE_COLOR=1
+  - NPM_CONFIG_COLOR=always
+  - GK_LOCK_COMMIT_AMEND=true
+  - secure: epc30/rDFzbC6086XnzU33SorIiy+gLUhkp9VQxb7QcKWGyCt7VTRq5gVVWNxH0CXrt2tHOWTxAICTd7KzamooDaEU7RgUHOuTddimhJ02Y/EkRWqPvC7RzKWQTgI+Qz7/OK3pQ4KGoU6nHgrKn1GtqfJPxDPlUAqorxJa6AC7WMAi2s2ZJ+Z9TF0q4/qQAD17/lUpU/D91hmM6D1G5vLHbGBkT3BPKG9lz643zeQdIZvpHnhc8Ra17DKrUMNj2HAdYgGtncQ/0P+WzCJw5kfqEPruHBdADHhETKxcq+XwGGPeEYGrec7bYl3B9euTtPrFdaoWy53j6A3li3HsPmsh4sUxojNcdYuzHBm+dgezsY6uwNwK5CTKHdxUQKNwnwYrn7P1fC+K9A2YvKG+yzYN99Sx6JCmRpHngYT1vlmGYTRsqm20CuSjR5yNs250nOuumLBlqs2eslrpnp2iY1vDKJ6Rpb8sitexgZ2c5PN+m/kGCbtenuRJpD79zPIEwg2Y/mbVA755RudHl7UEic4oVOWtIUIkIJlaA3ZwpmY4MoU8+xc14mwIv6rrAWzoqRNJKama62CiTLVzC0033FnffAGbmkisk0W9Z0q6pp/ng1Opmfn22KRbd9I17chBM/co/QXzPGK6EwImUDfzvYTybKH84BanLPy6oae0wyWlw=
