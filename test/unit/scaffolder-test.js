@@ -38,13 +38,25 @@ suite('travis', () => {
         install: ['npm install', 'gem install travis'],
         before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
         after_script: 'npm run greenkeeper:upload-lockfile',
+        after_success: 'npm run coverage:report',
         env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always', 'GK_LOCK_COMMIT_AMEND=true']}
       }
     ));
   });
 
-  test('that a badge is not defined for a private project', () => assert.becomes(
+  test('that a badge is not defined and coverage is not reported for a private project', () => assert.becomes(
     scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private'}),
     {}
-  ));
+  ).then(() => assert.calledWith(
+    yamlWriter.default,
+    `${projectRoot}/.travis.yml`,
+    {
+      language: 'node_js',
+      notifications: {email: false},
+      install: ['npm install', 'gem install travis'],
+      before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
+      after_script: 'npm run greenkeeper:upload-lockfile',
+      env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always', 'GK_LOCK_COMMIT_AMEND=true']}
+    }
+  )));
 });

@@ -7,6 +7,7 @@ export default async function ({projectRoot, vcs, visibility}) {
     install: ['npm install', 'gem install travis'],
     before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
     after_script: 'npm run greenkeeper:upload-lockfile',
+    ...'Public' === visibility && {after_success: 'npm run coverage:report'},
     env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always', 'GK_LOCK_COMMIT_AMEND=true']}
   });
 
