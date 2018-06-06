@@ -67,7 +67,7 @@ suite('travis', () => {
     {
       language: 'node_js',
       notifications: {email: false},
-      branches: {except: ["/^v\\d+\\.\\d+\\.\\d+$/"]},
+      branches: {except: ['"/^v\\d+\\.\\d+\\.\\d+$/"']},
       install: ['npm install', 'gem install travis'],
       before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
       after_script: 'npm run greenkeeper:upload-lockfile',
