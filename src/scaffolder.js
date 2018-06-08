@@ -5,7 +5,6 @@ export default async function ({projectRoot, vcs, visibility, packageType}) {
     language: 'node_js',
     notifications: {email: false},
     ...'Package' === packageType && {branches: {except: ['"/^v\\d+\\.\\d+\\.\\d+$/"']}},
-    install: ['npm install', 'gem install travis'],
     before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
     after_script: 'npm run greenkeeper:upload-lockfile',
     ...'Public' === visibility && {after_success: 'npm run coverage:report'},
