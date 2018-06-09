@@ -65,7 +65,7 @@ suite('travis', () => {
     {
       language: 'node_js',
       notifications: {email: false},
-      branches: {except: ['"/^v\\d+\\.\\d+\\.\\d+$/"']},
+      branches: {except: ['/^v\\d+\\.\\d+\\.\\d+$/']},
       before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
       after_script: 'npm run greenkeeper:upload-lockfile',
       deploy: {provider: 'script', skip_cleanup: true, script: 'npx semantic-release'},
