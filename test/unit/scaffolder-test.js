@@ -41,6 +41,7 @@ suite('travis', () => {
     }
   )));
 
+  /* eslint-disable no-template-curly-in-string */
   test('that a badge is not defined and coverage is not reported for a private project', () => assert.becomes(
     scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private'}),
     {}
@@ -50,6 +51,7 @@ suite('travis', () => {
     {
       language: 'node_js',
       notifications: {email: false},
+      before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc',
       before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
       after_script: 'npm run greenkeeper:upload-lockfile',
       env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always', 'GK_LOCK_COMMIT_AMEND=true']}
@@ -66,10 +68,12 @@ suite('travis', () => {
       language: 'node_js',
       notifications: {email: false},
       branches: {except: ['/^v\\d+\\.\\d+\\.\\d+$/']},
+      before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc',
       before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
       after_script: 'npm run greenkeeper:upload-lockfile',
       deploy: {provider: 'script', skip_cleanup: true, script: 'npx semantic-release'},
       env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always', 'GK_LOCK_COMMIT_AMEND=true']}
     }
   )));
+  /* eslint-enable no-template-curly-in-string */
 });
