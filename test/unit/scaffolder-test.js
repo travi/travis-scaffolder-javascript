@@ -76,4 +76,20 @@ suite('travis', () => {
     }
   )));
   /* eslint-enable no-template-curly-in-string */
+
+  test(
+    'that the installation command is directly controlled after node 10.5 since npm 6 is bundled, ' +
+    'which defaults to the `npm ci` command',
+    async () => {
+      await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Public', nodeVersion: '10.3'});
+
+      assert.calledWith(
+        yamlWriter.default,
+        `${projectRoot}/.travis.yml`,
+        sinon.match({
+          install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'
+        })
+      );
+    }
+  );
 });
