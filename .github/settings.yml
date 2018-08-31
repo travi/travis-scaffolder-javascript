@@ -1,5 +1,6 @@
 repository:
   description: CI scaffolder for JavaScript projects on Travis
+  homepage: https://npm.im/@travi/travis-scaffolder-javascript
   has_wiki: false
   has_projects: false
   has_downloads: false
