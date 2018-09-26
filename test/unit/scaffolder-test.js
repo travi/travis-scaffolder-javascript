@@ -34,10 +34,9 @@ suite('travis', () => {
     {
       language: 'node_js',
       notifications: {email: false},
-      before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
-      after_script: 'npm run greenkeeper:upload-lockfile',
+      before_script: ['npm ls >/dev/null'],
       after_success: 'npm run coverage:report',
-      env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always', 'GK_LOCK_COMMIT_AMEND=true']}
+      env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
     }
   )));
 
@@ -54,7 +53,7 @@ suite('travis', () => {
       before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc',
       before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
       after_script: 'npm run greenkeeper:upload-lockfile',
-      env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always', 'GK_LOCK_COMMIT_AMEND=true']}
+      env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
     }
   )));
 
@@ -72,7 +71,7 @@ suite('travis', () => {
       before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
       after_script: 'npm run greenkeeper:upload-lockfile',
       deploy: {provider: 'script', skip_cleanup: true, script: 'npx semantic-release'},
-      env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always', 'GK_LOCK_COMMIT_AMEND=true']}
+      env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
     }
   )));
   /* eslint-enable no-template-curly-in-string */

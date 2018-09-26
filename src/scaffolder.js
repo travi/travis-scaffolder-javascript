@@ -8,11 +8,14 @@ export default async function ({projectRoot, vcs, visibility, packageType, nodeV
     ...'Package' === packageType && {branches: {except: ['/^v\\d+\\.\\d+\\.\\d+$/']}},
     ...'Private' === visibility && {before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc'},
     ...10.3 <= nodeVersion && {install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'},
-    before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
-    after_script: 'npm run greenkeeper:upload-lockfile',
+    before_script: [
+      'Private' === visibility ? 'npm run greenkeeper:update-lockfile' : undefined,
+      'npm ls >/dev/null'
+    ].filter(Boolean),
+    ...'Private' === visibility && {after_script: 'npm run greenkeeper:upload-lockfile'},
     ...'Public' === visibility && {after_success: 'npm run coverage:report'},
     ...'Package' === packageType && {deploy: {provider: 'script', skip_cleanup: true, script: 'npx semantic-release'}},
-    env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always', 'GK_LOCK_COMMIT_AMEND=true']}
+    env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
   });
   /* eslint-enable no-template-curly-in-string */
 
