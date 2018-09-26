@@ -1,5 +1,13 @@
 import writeYaml from '../third-party-wrappers/write-yaml';
 
+function nodeVersionIs8Above12(nodeVersion) {
+  return 8.12 <= nodeVersion && 9 > nodeVersion;
+}
+
+function npmVersionIs6(nodeVersion) {
+  return 10.3 <= nodeVersion || nodeVersionIs8Above12(nodeVersion);
+}
+
 export default async function ({projectRoot, vcs, visibility, packageType, nodeVersion}) {
   /* eslint-disable no-template-curly-in-string */
   await writeYaml(`${projectRoot}/.travis.yml`, {
@@ -7,7 +15,9 @@ export default async function ({projectRoot, vcs, visibility, packageType, nodeV
     notifications: {email: false},
     ...'Package' === packageType && {branches: {except: ['/^v\\d+\\.\\d+\\.\\d+$/']}},
     ...'Private' === visibility && {before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc'},
-    ...10.3 <= nodeVersion && {install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'},
+    ...'Private' === visibility && npmVersionIs6(nodeVersion) && {
+      install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'
+    },
     before_script: [
       'Private' === visibility ? 'npm run greenkeeper:update-lockfile' : undefined,
       'npm ls >/dev/null'
