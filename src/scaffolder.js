@@ -32,7 +32,7 @@ export default async function ({projectRoot, vcs, visibility, packageType, nodeV
   return {
     ...'Public' === visibility && {
       badge: {
-        img: `https://img.shields.io/travis/${vcs.owner}/${vcs.name}.svg?branch=master`,
+        img: `https://img.shields.io/travis/com/${vcs.owner}/${vcs.name}.svg?branch=master`,
         link: `https://travis-ci.com/${vcs.owner}/${vcs.name}`,
         text: 'Build Status'
       }
