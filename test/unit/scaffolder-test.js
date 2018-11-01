@@ -23,7 +23,7 @@ suite('travis', () => {
     scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Public'}),
     {
       badge: {
-        img: `https://img.shields.io/travis/com/${vcs.owner}/${vcs.name}.svg?branch=master`,
+        img: `https://img.shields.io/travis/com/${vcs.owner}/${vcs.name}/master.svg`,
         link: `https://travis-ci.com/${vcs.owner}/${vcs.name}`,
         text: 'Build Status'
       }
