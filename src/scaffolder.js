@@ -8,22 +8,30 @@ function npmVersionIs6(nodeVersion) {
   return 10.3 <= nodeVersion || nodeVersionIs8Above12(nodeVersion);
 }
 
-export default async function ({projectRoot, vcs, visibility, packageType, nodeVersion}) {
+function coverageShouldBeReported(visibility, tests) {
+  return 'Public' === visibility && tests.unit;
+}
+
+function lockfileNeedsToBeUpdated(visibility) {
+  return 'Private' === visibility;
+}
+
+export default async function ({projectRoot, vcs, visibility, packageType, nodeVersion, tests}) {
   /* eslint-disable no-template-curly-in-string */
   await writeYaml(`${projectRoot}/.travis.yml`, {
     language: 'node_js',
     notifications: {email: false},
     ...'Package' === packageType && {branches: {except: ['/^v\\d+\\.\\d+\\.\\d+$/']}},
     ...'Private' === visibility && {before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc'},
-    ...'Private' === visibility && npmVersionIs6(nodeVersion) && {
+    ...lockfileNeedsToBeUpdated(visibility) && npmVersionIs6(nodeVersion) && {
       install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'
     },
     before_script: [
-      'Private' === visibility ? 'npm run greenkeeper:update-lockfile' : undefined,
+      lockfileNeedsToBeUpdated(visibility) ? 'npm run greenkeeper:update-lockfile' : undefined,
       'npm ls >/dev/null'
     ].filter(Boolean),
-    ...'Private' === visibility && {after_script: 'npm run greenkeeper:upload-lockfile'},
-    ...'Public' === visibility && {after_success: 'npm run coverage:report'},
+    ...lockfileNeedsToBeUpdated(visibility) && {after_script: 'npm run greenkeeper:upload-lockfile'},
+    ...coverageShouldBeReported(visibility, tests) && {after_success: 'npm run coverage:report'},
     ...'Package' === packageType && {deploy: {provider: 'script', skip_cleanup: true, script: 'npx semantic-release'}},
     env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
   });

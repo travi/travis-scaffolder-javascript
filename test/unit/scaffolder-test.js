@@ -20,7 +20,7 @@ suite('travis', () => {
   teardown(() => sandbox.restore());
 
   test('that a base config is created for a javascript project', () => assert.becomes(
-    scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Public'}),
+    scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Public', tests: {unit: true}}),
     {
       badge: {
         img: `https://img.shields.io/travis/com/${vcs.owner}/${vcs.name}/master.svg`,
@@ -53,6 +53,23 @@ suite('travis', () => {
       before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc',
       before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
       after_script: 'npm run greenkeeper:upload-lockfile',
+      env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
+    }
+  )));
+
+  test('coverage is not reported for a project that isnt unit tested', () => scaffold({
+    projectType: 'JavaScript',
+    projectRoot,
+    vcs,
+    visibility: 'Public',
+    tests: {unit: false}
+  }).then(() => assert.calledWith(
+    yamlWriter.default,
+    `${projectRoot}/.travis.yml`,
+    {
+      language: 'node_js',
+      notifications: {email: false},
+      before_script: ['npm ls >/dev/null'],
       env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
     }
   )));
@@ -132,7 +149,7 @@ suite('travis', () => {
   );
 
   test('that the installation command is not directly controlled for public projects', async () => {
-    await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Public', nodeVersion: '10.3'});
+    await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Public', nodeVersion: '10.3', tests: {}});
 
     assert.neverCalledWithMatch(
       yamlWriter.default,
