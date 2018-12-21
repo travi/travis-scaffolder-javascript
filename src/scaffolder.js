@@ -32,7 +32,14 @@ export default async function ({projectRoot, vcs, visibility, packageType, nodeV
     ].filter(Boolean),
     ...lockfileNeedsToBeUpdated(visibility) && {after_script: 'npm run greenkeeper:upload-lockfile'},
     ...coverageShouldBeReported(visibility, tests) && {after_success: 'npm run coverage:report'},
-    ...'Package' === packageType && {deploy: {provider: 'script', skip_cleanup: true, script: 'npx semantic-release'}},
+    ...'Package' === packageType && {
+      deploy: {
+        provider: 'script',
+        skip_cleanup: true,
+        script: 'npx semantic-release',
+        on: {all_branches: true}
+      }
+    },
     env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
   });
   /* eslint-enable no-template-curly-in-string */

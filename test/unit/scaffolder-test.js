@@ -87,7 +87,7 @@ suite('travis', () => {
       before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc',
       before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
       after_script: 'npm run greenkeeper:upload-lockfile',
-      deploy: {provider: 'script', skip_cleanup: true, script: 'npx semantic-release'},
+      deploy: {provider: 'script', skip_cleanup: true, script: 'npx semantic-release', on: {all_branches: true}},
       env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
     }
   )));
