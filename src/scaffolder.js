@@ -16,13 +16,19 @@ function lockfileNeedsToBeUpdated(visibility) {
   return 'Private' === visibility;
 }
 
+function privateNpmTokenIsNeeded(visibility) {
+  return 'Private' === visibility;
+}
+
 export default async function ({projectRoot, vcs, visibility, packageType, nodeVersion, tests}) {
-  /* eslint-disable no-template-curly-in-string */
   await writeYaml(`${projectRoot}/.travis.yml`, {
     language: 'node_js',
     notifications: {email: false},
     ...'Package' === packageType && {branches: {except: ['/^v\\d+\\.\\d+\\.\\d+$/']}},
-    ...'Private' === visibility && {before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc'},
+    ...privateNpmTokenIsNeeded(visibility) && {
+      /* eslint-disable-next-line no-template-curly-in-string */
+      before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc'
+    },
     ...lockfileNeedsToBeUpdated(visibility) && npmVersionIs6(nodeVersion) && {
       install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'
     },
@@ -42,7 +48,6 @@ export default async function ({projectRoot, vcs, visibility, packageType, nodeV
     },
     env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
   });
-  /* eslint-enable no-template-curly-in-string */
 
   return {
     ...'Public' === visibility && {

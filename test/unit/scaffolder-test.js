@@ -40,7 +40,6 @@ suite('travis', () => {
     }
   )));
 
-  /* eslint-disable no-template-curly-in-string */
   test('that a badge is not defined and coverage is not reported for a private project', () => assert.becomes(
     scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private'}),
     {}
@@ -50,6 +49,7 @@ suite('travis', () => {
     {
       language: 'node_js',
       notifications: {email: false},
+      /* eslint-disable-next-line no-template-curly-in-string */
       before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc',
       before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
       after_script: 'npm run greenkeeper:upload-lockfile',
@@ -74,87 +74,98 @@ suite('travis', () => {
     }
   )));
 
-  test('that packages get deployed with semantic-release, but tag builds are excluded', () => assert.becomes(
-    scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private', packageType: 'Package'}),
-    {}
-  ).then(() => assert.calledWith(
-    yamlWriter.default,
-    `${projectRoot}/.travis.yml`,
-    {
-      language: 'node_js',
-      notifications: {email: false},
-      branches: {except: ['/^v\\d+\\.\\d+\\.\\d+$/']},
-      before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc',
-      before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
-      after_script: 'npm run greenkeeper:upload-lockfile',
-      deploy: {provider: 'script', skip_cleanup: true, script: 'npx semantic-release', on: {all_branches: true}},
-      env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
-    }
-  )));
-  /* eslint-enable no-template-curly-in-string */
-
-  test(
-    'that the installation command is directly controlled after node 10.5 since npm 6 is bundled, ' +
-    'which defaults to the `npm ci` command',
-    async () => {
-      await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private', nodeVersion: '10.3'});
-
-      assert.calledWith(
-        yamlWriter.default,
-        `${projectRoot}/.travis.yml`,
-        sinon.match({
-          install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'
-        })
-      );
-    }
-  );
-
-  test(
-    'that the installation command is directly controlled after node 8.12 since npm 6 is bundled, ' +
-    'which defaults to the `npm ci` command',
-    async () => {
-      await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private', nodeVersion: '8.12'});
-
-      assert.calledWith(
-        yamlWriter.default,
-        `${projectRoot}/.travis.yml`,
-        sinon.match({
-          install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'
-        })
-      );
-    }
-  );
-
-  test('that the installation command is not directly controlled for node 9 since npm 6 is not bundled', async () => {
-    await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private', nodeVersion: '9'});
-
-    assert.neverCalledWithMatch(
+  suite('package', () => {
+    test('that packages get deployed with semantic-release, but tag builds are excluded', () => assert.becomes(
+      scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private', packageType: 'Package'}),
+      {}
+    ).then(() => assert.calledWith(
       yamlWriter.default,
       `${projectRoot}/.travis.yml`,
-      {install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'}
-    );
+      {
+        language: 'node_js',
+        notifications: {email: false},
+        branches: {except: ['/^v\\d+\\.\\d+\\.\\d+$/']},
+        /* eslint-disable-next-line no-template-curly-in-string */
+        before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc',
+        before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
+        after_script: 'npm run greenkeeper:upload-lockfile',
+        deploy: {provider: 'script', skip_cleanup: true, script: 'npx semantic-release', on: {all_branches: true}},
+        env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
+      }
+    )));
   });
 
-  test(
-    'that the installation command is not directly controlled for node below 8.12 since npm 6 is not bundled',
-    async () => {
-      await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private', nodeVersion: '8.11'});
+  suite('lockfile', () => {
+    test(
+      'that the installation command is directly controlled after node 10.5 since npm 6 is bundled, ' +
+      'which defaults to the `npm ci` command',
+      async () => {
+        await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private', nodeVersion: '10.3'});
+
+        assert.calledWith(
+          yamlWriter.default,
+          `${projectRoot}/.travis.yml`,
+          sinon.match({
+            install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'
+          })
+        );
+      }
+    );
+
+    test(
+      'that the installation command is directly controlled after node 8.12 since npm 6 is bundled, ' +
+      'which defaults to the `npm ci` command',
+      async () => {
+        await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private', nodeVersion: '8.12'});
+
+        assert.calledWith(
+          yamlWriter.default,
+          `${projectRoot}/.travis.yml`,
+          sinon.match({
+            install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'
+          })
+        );
+      }
+    );
+
+    test('that the installation command is not directly controlled for node 9 since npm 6 is not bundled', async () => {
+      await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private', nodeVersion: '9'});
 
       assert.neverCalledWithMatch(
         yamlWriter.default,
         `${projectRoot}/.travis.yml`,
         {install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'}
       );
-    }
-  );
+    });
 
-  test('that the installation command is not directly controlled for public projects', async () => {
-    await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Public', nodeVersion: '10.3', tests: {}});
+    test(
+      'that the installation command is not directly controlled for node below 8.12 since npm 6 is not bundled',
+      async () => {
+        await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private', nodeVersion: '8.11'});
 
-    assert.neverCalledWithMatch(
-      yamlWriter.default,
-      `${projectRoot}/.travis.yml`,
-      {install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'}
+        assert.neverCalledWithMatch(
+          yamlWriter.default,
+          `${projectRoot}/.travis.yml`,
+          {install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'}
+        );
+      }
     );
+
+    test('that the installation command is not directly controlled for public projects', async () => {
+      await scaffold({
+        projectType: 'JavaScript',
+        projectRoot,
+        vcs,
+        visibility: 'Public',
+        nodeVersion: '10.3',
+        tests: {}
+      });
+
+      assert.neverCalledWithMatch(
+        yamlWriter.default,
+        `${projectRoot}/.travis.yml`,
+        {install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'}
+      );
+    });
   });
 });
