@@ -34,7 +34,8 @@ export default async function ({projectRoot, vcs, visibility, packageType, nodeV
     },
     before_script: [
       lockfileNeedsToBeUpdated(visibility) ? 'npm run greenkeeper:update-lockfile' : undefined,
-      'npm ls >/dev/null'
+      'npm ls >/dev/null',
+      privateNpmTokenIsNeeded(visibility) && 'git checkout .npmrc'
     ].filter(Boolean),
     ...lockfileNeedsToBeUpdated(visibility) && {after_script: 'npm run greenkeeper:upload-lockfile'},
     ...coverageShouldBeReported(visibility, tests) && {after_success: 'npm run coverage:report'},

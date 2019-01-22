@@ -8,6 +8,14 @@ suite('travis', () => {
   let sandbox;
   const projectRoot = any.string();
   const vcs = {owner: any.word(), name: any.word()};
+  const colorEnablingEnvironmentVariables = ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always'];
+  /* eslint-disable-next-line no-template-curly-in-string */
+  const privateNpmTokenInjectionScript = 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc';
+  const privateBeforeScriptScripts = [
+    'npm run greenkeeper:update-lockfile',
+    'npm ls >/dev/null',
+    'git checkout .npmrc'
+  ];
 
   setup(() => {
     sandbox = sinon.createSandbox();
@@ -36,24 +44,7 @@ suite('travis', () => {
       notifications: {email: false},
       before_script: ['npm ls >/dev/null'],
       after_success: 'npm run coverage:report',
-      env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
-    }
-  )));
-
-  test('that a badge is not defined and coverage is not reported for a private project', () => assert.becomes(
-    scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private'}),
-    {}
-  ).then(() => assert.calledWith(
-    yamlWriter.default,
-    `${projectRoot}/.travis.yml`,
-    {
-      language: 'node_js',
-      notifications: {email: false},
-      /* eslint-disable-next-line no-template-curly-in-string */
-      before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc',
-      before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
-      after_script: 'npm run greenkeeper:upload-lockfile',
-      env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
+      env: {global: colorEnablingEnvironmentVariables}
     }
   )));
 
@@ -70,11 +61,38 @@ suite('travis', () => {
       language: 'node_js',
       notifications: {email: false},
       before_script: ['npm ls >/dev/null'],
-      env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
+      env: {global: colorEnablingEnvironmentVariables}
     }
   )));
 
+  suite('private project', () => {
+    test('that a badge is not defined and coverage is not reported for a private project', async () => {
+      assert.deepEqual(await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private'}), {});
+
+      assert.calledWith(
+        yamlWriter.default,
+        `${projectRoot}/.travis.yml`,
+        {
+          language: 'node_js',
+          notifications: {email: false},
+          before_install: privateNpmTokenInjectionScript,
+          before_script: privateBeforeScriptScripts,
+          after_script: 'npm run greenkeeper:upload-lockfile',
+          env: {global: colorEnablingEnvironmentVariables}
+        }
+      );
+    });
+  });
+
   suite('package', () => {
+    const regexToExcludePublishedVersionTagsFromBuilding = '/^v\\d+\\.\\d+\\.\\d+$/';
+    const configToPublishWithSemanticRelease = {
+      provider: 'script',
+      skip_cleanup: true,
+      script: 'npx semantic-release',
+      on: {all_branches: true}
+    };
+
     test('that packages get deployed with semantic-release, but tag builds are excluded', () => assert.becomes(
       scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private', packageType: 'Package'}),
       {}
@@ -84,13 +102,12 @@ suite('travis', () => {
       {
         language: 'node_js',
         notifications: {email: false},
-        branches: {except: ['/^v\\d+\\.\\d+\\.\\d+$/']},
-        /* eslint-disable-next-line no-template-curly-in-string */
-        before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc',
-        before_script: ['npm run greenkeeper:update-lockfile', 'npm ls >/dev/null'],
+        branches: {except: [regexToExcludePublishedVersionTagsFromBuilding]},
+        before_install: privateNpmTokenInjectionScript,
+        before_script: privateBeforeScriptScripts,
         after_script: 'npm run greenkeeper:upload-lockfile',
-        deploy: {provider: 'script', skip_cleanup: true, script: 'npx semantic-release', on: {all_branches: true}},
-        env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
+        deploy: configToPublishWithSemanticRelease,
+        env: {global: colorEnablingEnvironmentVariables}
       }
     )));
   });
