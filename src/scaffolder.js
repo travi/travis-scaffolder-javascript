@@ -1,5 +1,7 @@
 import writeYaml from '../third-party-wrappers/write-yaml';
 
+const publishedVersionRegex = '/^v\\d+\\.\\d+\\.\\d+(-(alpha|beta)\\.\\d+(@(alpha|beta))?)?$/';
+
 function nodeVersionIs8Above12(nodeVersion) {
   return 8.12 <= nodeVersion && 9 > nodeVersion;
 }
@@ -24,7 +26,7 @@ export default async function ({projectRoot, vcs, visibility, packageType, nodeV
   await writeYaml(`${projectRoot}/.travis.yml`, {
     language: 'node_js',
     notifications: {email: false},
-    ...'Package' === packageType && {branches: {except: ['/^v\\d+\\.\\d+\\.\\d+$/']}},
+    ...'Package' === packageType && {branches: {except: [publishedVersionRegex]}},
     ...privateNpmTokenIsNeeded(visibility) && {
       /* eslint-disable-next-line no-template-curly-in-string */
       before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc'
