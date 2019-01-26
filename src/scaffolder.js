@@ -22,6 +22,10 @@ function privateNpmTokenIsNeeded(visibility) {
   return 'Private' === visibility;
 }
 
+function clenupInjectedToken(packageType) {
+  return 'Package' === packageType ? 'rm .npmrc' : 'git checkout .npmrc';
+}
+
 export default async function ({projectRoot, vcs, visibility, packageType, nodeVersion, tests}) {
   await writeYaml(`${projectRoot}/.travis.yml`, {
     language: 'node_js',
@@ -37,7 +41,7 @@ export default async function ({projectRoot, vcs, visibility, packageType, nodeV
     before_script: [
       lockfileNeedsToBeUpdated(visibility) ? 'npm run greenkeeper:update-lockfile' : undefined,
       'npm ls >/dev/null',
-      privateNpmTokenIsNeeded(visibility) && 'git checkout .npmrc'
+      privateNpmTokenIsNeeded(visibility) && clenupInjectedToken(packageType)
     ].filter(Boolean),
     ...lockfileNeedsToBeUpdated(visibility) && {after_script: 'npm run greenkeeper:upload-lockfile'},
     ...coverageShouldBeReported(visibility, tests) && {after_success: 'npm run coverage:report'},
