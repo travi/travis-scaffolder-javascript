@@ -77,8 +77,8 @@ suite('config scaffolder', () => {
   });
 
   suite('package', () => {
-    const regexToExcludePublishedVersionTagsFromBuilding
-      = '/^v\\d+\\.\\d+\\.\\d+(-(alpha|beta)\\.\\d+(@(alpha|beta))?)?$/';
+    const regexToExcludePublishedVersionTagsFromBuilding =
+      '/^v\\d+\\.\\d+\\.\\d+(-(alpha|beta)\\.\\d+(@(alpha|beta))?)?$/';
     const configToPublishWithSemanticRelease = {
       provider: 'script',
       skip_cleanup: true,
