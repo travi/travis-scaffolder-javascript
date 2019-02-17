@@ -22,8 +22,8 @@ function privateNpmTokenIsNeeded(visibility) {
   return 'Private' === visibility;
 }
 
-function cleanupInjectedToken(packageType) {
-  return 'Package' === packageType ? 'rm .npmrc' : 'git checkout .npmrc';
+function cleanupInjectedToken() {
+  return 'rm .npmrc';
 }
 
 export default function (projectRoot, packageType, visibility, nodeVersion, tests) {
@@ -41,7 +41,7 @@ export default function (projectRoot, packageType, visibility, nodeVersion, test
     before_script: [
       lockfileNeedsToBeUpdated(visibility) ? 'npm run greenkeeper:update-lockfile' : undefined,
       'npm ls >/dev/null',
-      privateNpmTokenIsNeeded(visibility) && cleanupInjectedToken(packageType)
+      privateNpmTokenIsNeeded(visibility) && cleanupInjectedToken()
     ].filter(Boolean),
     ...lockfileNeedsToBeUpdated(visibility) && {after_script: 'npm run greenkeeper:upload-lockfile'},
     ...coverageShouldBeReported(visibility, tests) && {after_success: 'npm run coverage:report'},

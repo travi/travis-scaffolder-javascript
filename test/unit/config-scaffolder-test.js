@@ -12,7 +12,8 @@ suite('config scaffolder', () => {
   const privateNpmTokenInjectionScript = 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc';
   const commonPrivateBeforeScriptScripts = [
     'npm run greenkeeper:update-lockfile',
-    'npm ls >/dev/null'
+    'npm ls >/dev/null',
+    'rm .npmrc'
   ];
 
   setup(() => {
@@ -67,7 +68,7 @@ suite('config scaffolder', () => {
           language: 'node_js',
           notifications: {email: false},
           before_install: privateNpmTokenInjectionScript,
-          before_script: [...commonPrivateBeforeScriptScripts, 'git checkout .npmrc'],
+          before_script: commonPrivateBeforeScriptScripts,
           after_script: 'npm run greenkeeper:upload-lockfile',
           env: {global: colorEnablingEnvironmentVariables}
         }
@@ -96,7 +97,7 @@ suite('config scaffolder', () => {
           notifications: {email: false},
           branches: {except: [regexToExcludePublishedVersionTagsFromBuilding]},
           before_install: privateNpmTokenInjectionScript,
-          before_script: [...commonPrivateBeforeScriptScripts, 'rm .npmrc'],
+          before_script: commonPrivateBeforeScriptScripts,
           after_script: 'npm run greenkeeper:upload-lockfile',
           deploy: configToPublishWithSemanticRelease,
           env: {global: colorEnablingEnvironmentVariables}
