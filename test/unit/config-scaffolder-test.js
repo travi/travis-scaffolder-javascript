@@ -10,11 +10,7 @@ suite('config scaffolder', () => {
   const colorEnablingEnvironmentVariables = ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always'];
   /* eslint-disable-next-line no-template-curly-in-string */
   const privateNpmTokenInjectionScript = 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc';
-  const commonPrivateBeforeScriptScripts = [
-    'npm run greenkeeper:update-lockfile',
-    'npm ls >/dev/null',
-    'rm .npmrc'
-  ];
+  const commonPrivateBeforeScriptScripts = ['npm ls >/dev/null', 'rm .npmrc'];
 
   setup(() => {
     sandbox = sinon.createSandbox();
@@ -69,7 +65,6 @@ suite('config scaffolder', () => {
           notifications: {email: false},
           before_install: privateNpmTokenInjectionScript,
           before_script: commonPrivateBeforeScriptScripts,
-          after_script: 'npm run greenkeeper:upload-lockfile',
           env: {global: colorEnablingEnvironmentVariables}
         }
       );
@@ -98,77 +93,9 @@ suite('config scaffolder', () => {
           branches: {except: [regexToExcludePublishedVersionTagsFromBuilding]},
           before_install: privateNpmTokenInjectionScript,
           before_script: commonPrivateBeforeScriptScripts,
-          after_script: 'npm run greenkeeper:upload-lockfile',
           deploy: configToPublishWithSemanticRelease,
           env: {global: colorEnablingEnvironmentVariables}
         }
-      );
-    });
-  });
-
-  suite('lockfile', () => {
-    test(
-      'that the installation command is directly controlled after node 10.5 since npm 6 is bundled, ' +
-      'which defaults to the `npm ci` command',
-      async () => {
-        await scaffoldConfig(projectRoot, null, 'Private', '10.3');
-
-        assert.calledWith(
-          yamlWriter.default,
-          `${projectRoot}/.travis.yml`,
-          sinon.match({
-            install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'
-          })
-        );
-      }
-    );
-
-    test(
-      'that the installation command is directly controlled after node 8.12 since npm 6 is bundled, ' +
-      'which defaults to the `npm ci` command',
-      async () => {
-        await scaffoldConfig(projectRoot, null, 'Private', '8.12');
-
-        assert.calledWith(
-          yamlWriter.default,
-          `${projectRoot}/.travis.yml`,
-          sinon.match({
-            install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'
-          })
-        );
-      }
-    );
-
-    test('that the installation command is not directly controlled for node 9 since npm 6 is not bundled', async () => {
-      await scaffoldConfig(projectRoot, null, 'Private', '9');
-
-      assert.neverCalledWithMatch(
-        yamlWriter.default,
-        `${projectRoot}/.travis.yml`,
-        {install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'}
-      );
-    });
-
-    test(
-      'that the installation command is not directly controlled for node below 8.12 since npm 6 is not bundled',
-      async () => {
-        await scaffoldConfig(projectRoot, null, 'Private', '8.11');
-
-        assert.neverCalledWithMatch(
-          yamlWriter.default,
-          `${projectRoot}/.travis.yml`,
-          {install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'}
-        );
-      }
-    );
-
-    test('that the installation command is not directly controlled for public projects', async () => {
-      await scaffoldConfig(projectRoot, null, 'Public', '10.3', {});
-
-      assert.neverCalledWithMatch(
-        yamlWriter.default,
-        `${projectRoot}/.travis.yml`,
-        {install: 'case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;'}
       );
     });
   });
