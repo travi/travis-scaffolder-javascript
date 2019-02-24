@@ -32,6 +32,7 @@ suite('travis', () => {
         tests: {unit: true}
       }),
       {
+        devDependencies: ['travis-lint'],
         badge: {
           img: `https://img.shields.io/travis/com/${vcs.owner}/${vcs.name}/master.svg`,
           link: `https://travis-ci.com/${vcs.owner}/${vcs.name}`,
@@ -44,6 +45,6 @@ suite('travis', () => {
 
   test('that a badge is not defined and coverage is not reported for a private project', async () => assert.deepEqual(
     await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private'}),
-    {}
+    {devDependencies: ['travis-lint']}
   ));
 });

@@ -4,6 +4,7 @@ export default async function ({projectRoot, vcs, visibility, packageType, nodeV
   await scaffoldConfigFile(projectRoot, packageType, visibility, nodeVersion, tests);
 
   return {
+    devDependencies: ['travis-lint'],
     ...'Public' === visibility && {
       badge: {
         img: `https://img.shields.io/travis/com/${vcs.owner}/${vcs.name}/master.svg`,
