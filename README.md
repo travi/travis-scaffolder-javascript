@@ -6,9 +6,19 @@ CI scaffolder for JavaScript projects on [Travis](https:///travis-ci.com)
 [![Build Status][ci-badge]][ci-link]
 [![Codecov](https://img.shields.io/codecov/c/github/travi/travis-scaffolder-javascript.svg)](https://codecov.io/github/travi/travis-scaffolder-javascript)
 
+## Usage
+
 <!-- consumer badges -->
 [![npm][npm-badge]][npm-link]
 [![MIT license][license-badge]][license-link]
+
+### Installation
+
+```sh
+$ npm install @travi/travis-scaffolder-javascript --save
+```
+
+## Contributing
 
 <!-- contribution badges -->
 [![Conventional Commits][commit-convention-badge]][commit-convention-link]
@@ -16,6 +26,26 @@ CI scaffolder for JavaScript projects on [Travis](https:///travis-ci.com)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![PRs Welcome][PRs-badge]][PRs-link]
 [![Greenkeeper badge](https://badges.greenkeeper.io/travi/travis-scaffolder-javascript.svg)](https://greenkeeper.io/)
+
+### Dependencies
+
+```sh
+$ nvm install
+$ npm install
+```
+
+### Verification
+
+```sh
+$ npm test
+```
+
+## Related Projects
+
+* [project-scaffolder](https://npm.im/@travi/project-scaffolder)
+* [scaffolder-sub-command](https://github.com/travi/scaffolder-sub-command)
+* [javascript-scaffolder](https://github.com/travi/javascript-scaffolder)
+* [cli](https://npm.im/@travi/cli)
 
 [npm-link]: https://www.npmjs.com/package/@travi/travis-scaffolder-javascript
 [npm-badge]: https://img.shields.io/npm/v/@travi/travis-scaffolder-javascript.svg
