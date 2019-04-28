@@ -6,13 +6,6 @@ export default async function ({projectRoot, vcs, visibility, packageType, nodeV
   return {
     devDependencies: ['travis-lint'],
     scripts: {'lint:travis': 'travis-lint .travis.yml'},
-    ...'Public' === visibility && {
-      badge: {
-        img: `https://img.shields.io/travis/com/${vcs.owner}/${vcs.name}/master.svg`,
-        link: `https://travis-ci.com/${vcs.owner}/${vcs.name}`,
-        text: 'Build Status'
-      }
-    },
     badges: {
       status: {
         ...'Public' === visibility && {
