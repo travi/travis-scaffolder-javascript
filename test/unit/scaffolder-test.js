@@ -38,6 +38,15 @@ suite('travis', () => {
           img: `https://img.shields.io/travis/com/${vcs.owner}/${vcs.name}/master.svg`,
           link: `https://travis-ci.com/${vcs.owner}/${vcs.name}`,
           text: 'Build Status'
+        },
+        badges: {
+          status: {
+            ci: {
+              img: `https://img.shields.io/travis/com/${vcs.owner}/${vcs.name}/master.svg`,
+              link: `https://travis-ci.com/${vcs.owner}/${vcs.name}`,
+              text: 'Build Status'
+            }
+          }
         }
       }
     );
@@ -46,6 +55,6 @@ suite('travis', () => {
 
   test('that a badge is not defined and coverage is not reported for a private project', async () => assert.deepEqual(
     await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private'}),
-    {devDependencies: ['travis-lint'], scripts: {'lint:travis': 'travis-lint .travis.yml'}}
+    {devDependencies: ['travis-lint'], scripts: {'lint:travis': 'travis-lint .travis.yml'}, badges: {status: {}}}
   ));
 });
