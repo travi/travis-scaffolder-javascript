@@ -32,7 +32,8 @@
   },
   "devDependencies": {
     "@travi/any": "^2.0.6",
-    "@travi/eslint-config-travi": "^1.8.6",
+    "@travi/eslint-config": "1.0.24",
+    "@travi/eslint-config-mocha": "1.0.5",
     "babel-preset-travi": "^1.4.2",
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
