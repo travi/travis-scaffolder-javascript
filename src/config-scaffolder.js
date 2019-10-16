@@ -28,7 +28,7 @@ export default function (projectRoot, packageType, visibility, nodeVersion, test
     ...'Package' === packageType && {
       deploy: {
         provider: 'script',
-        skip_cleanup: true,
+        edge: true,
         script: 'npx semantic-release',
         on: {all_branches: true}
       }

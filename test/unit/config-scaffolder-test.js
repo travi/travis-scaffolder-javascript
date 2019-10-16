@@ -76,7 +76,7 @@ suite('config scaffolder', () => {
       '/^v\\d+\\.\\d+\\.\\d+(-(alpha|beta)\\.\\d+(@(alpha|beta))?)?$/';
     const configToPublishWithSemanticRelease = {
       provider: 'script',
-      skip_cleanup: true,
+      edge: true,
       script: 'npx semantic-release',
       on: {all_branches: true}
     };
