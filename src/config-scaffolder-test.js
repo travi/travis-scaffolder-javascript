@@ -1,8 +1,8 @@
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
-import * as yamlWriter from '../../third-party-wrappers/write-yaml';
-import scaffoldConfig from '../../src/config-scaffolder';
+import * as yamlWriter from '../third-party-wrappers/write-yaml';
+import scaffoldConfig from './config-scaffolder';
 
 suite('config scaffolder', () => {
   let sandbox;

@@ -14,7 +14,7 @@
     "lint:js": "eslint . --cache",
     "lint:travis": "travis-lint .travis.yml",
     "test": "run-s lint:* test:*",
-    "test:unit:base": "mocha --recursive test/unit",
+    "test:unit:base": "mocha src/**/*-test.js",
     "test:unit": "nyc run-s test:unit:base",
     "coverage:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "build": "run-s clean build:*",
