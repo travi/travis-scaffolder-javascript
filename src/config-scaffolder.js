@@ -12,7 +12,7 @@ function cleanupInjectedToken() {
   return 'rm .npmrc';
 }
 
-export default function (projectRoot, packageType, visibility, tests, account) {
+export default function (projectRoot, projectType, visibility, tests, account) {
   return writeYaml(`${projectRoot}/.travis.yml`, {
     version: '~> 1.0',
     language: 'node_js',
@@ -23,7 +23,7 @@ export default function (projectRoot, packageType, visibility, tests, account) {
     },
     before_script: ['npm ls >/dev/null', privateNpmTokenIsNeeded(visibility) && cleanupInjectedToken()].filter(Boolean),
     ...coverageShouldBeReported(visibility, tests) && {after_success: 'npm run coverage:report'},
-    ...'Package' === packageType && {import: [{source: `${account}/.travis-ci:authenticated-semantic-release.yml`}]},
+    ...'Package' === projectType && {import: [{source: `${account}/.travis-ci:authenticated-semantic-release.yml`}]},
     env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}
   });
 }

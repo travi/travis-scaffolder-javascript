@@ -23,18 +23,17 @@ suite('travis', () => {
   teardown(() => sandbox.restore());
 
   test('that a base config is created for public a javascript project', async () => {
-    const packageType = any.word();
+    const projectType = any.word();
     const visibility = 'Public';
     const tests = any.simpleObject();
 
     assert.deepEqual(
       await scaffold({
-        projectType: 'JavaScript',
         projectRoot,
         vcs,
         visibility,
         tests,
-        packageType
+        projectType
       }),
       {
         devDependencies: ['travis-lint'],
@@ -50,12 +49,12 @@ suite('travis', () => {
         }
       }
     );
-    assert.calledWith(configScaffolder.default, projectRoot, packageType, visibility, tests, vcs.owner);
+    assert.calledWith(configScaffolder.default, projectRoot, projectType, visibility, tests, vcs.owner);
   });
 
 
   test('that a badge is not defined and coverage is not reported for a private project', async () => assert.deepEqual(
-    await scaffold({projectType: 'JavaScript', projectRoot, vcs, visibility: 'Private'}),
+    await scaffold({projectRoot, vcs, visibility: 'Private'}),
     {devDependencies: ['travis-lint'], scripts: {'lint:travis': 'travis-lint .travis.yml'}, badges: {status: {}}}
   ));
 });

@@ -34,6 +34,7 @@
     "@travi/any": "^2.0.6",
     "@travi/eslint-config": "1.0.25",
     "@travi/eslint-config-mocha": "1.0.5",
+    "@travi/javascript-scaffolder": "^8.0.0",
     "babel-preset-travi": "^1.4.2",
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
@@ -52,5 +53,8 @@
   },
   "dependencies": {
     "write-yaml": "^1.0.0"
+  },
+  "peerDependencies": {
+    "@travi/javascript-scaffolder": "^8.0.0"
   }
 }
