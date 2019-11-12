@@ -23,13 +23,18 @@ suite('travis', () => {
   teardown(() => sandbox.restore());
 
   test('that a base config is created for public a javascript project', async () => {
+    const packageType = any.word();
+    const visibility = 'Public';
+    const tests = any.simpleObject();
+
     assert.deepEqual(
       await scaffold({
         projectType: 'JavaScript',
         projectRoot,
         vcs,
-        visibility: 'Public',
-        tests: {unit: true}
+        visibility,
+        tests,
+        packageType
       }),
       {
         devDependencies: ['travis-lint'],
@@ -45,6 +50,7 @@ suite('travis', () => {
         }
       }
     );
+    assert.calledWith(configScaffolder.default, projectRoot, packageType, visibility, tests, vcs.owner);
   });
 
 

@@ -23,7 +23,7 @@ suite('config scaffolder', () => {
   teardown(() => sandbox.restore());
 
   test('that a base config is created for a javascript project', async () => {
-    await scaffoldConfig(projectRoot, null, 'Public', null, {unit: true});
+    await scaffoldConfig(projectRoot, null, 'Public', {unit: true});
 
     assert.calledWith(
       yamlWriter.default,
@@ -40,7 +40,7 @@ suite('config scaffolder', () => {
   });
 
   test('coverage is not reported for a project that isnt unit tested', async () => {
-    await scaffoldConfig(projectRoot, null, 'Public', null, {unit: false});
+    await scaffoldConfig(projectRoot, null, 'Public', {unit: false});
 
     assert.calledWith(
       yamlWriter.default,
@@ -75,17 +75,10 @@ suite('config scaffolder', () => {
   });
 
   suite('package', () => {
-    const regexToExcludePublishedVersionTagsFromBuilding = '/^v\\d+\\.\\d+\\.\\d+'
-      + '(-(alpha|beta)\\.\\d+(@(alpha|beta))?)?$/';
-    const configToPublishWithSemanticRelease = {
-      provider: 'script',
-      edge: true,
-      script: 'npx semantic-release',
-      on: {all_branches: true}
-    };
-
     test('that packages get deployed with semantic-release, but tag builds are excluded', async () => {
-      await scaffoldConfig(projectRoot, 'Package', 'Private');
+      const account = any.word();
+
+      await scaffoldConfig(projectRoot, 'Package', 'Private', any.simpleObject(), account);
 
       assert.calledWith(
         yamlWriter.default,
@@ -94,10 +87,9 @@ suite('config scaffolder', () => {
           version: '~> 1.0',
           language: 'node_js',
           notifications: {email: false},
-          branches: {except: [regexToExcludePublishedVersionTagsFromBuilding]},
           before_install: privateNpmTokenInjectionScript,
           before_script: commonPrivateBeforeScriptScripts,
-          deploy: configToPublishWithSemanticRelease,
+          import: [{source: `${account}/.travis-ci:authenticated-semantic-release.yml`}],
           env: {global: colorEnablingEnvironmentVariables}
         }
       );

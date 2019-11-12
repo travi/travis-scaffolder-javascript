@@ -1,7 +1,7 @@
 import scaffoldConfigFile from './config-scaffolder';
 
-export default async function ({projectRoot, vcs, visibility, packageType, nodeVersion, tests}) {
-  await scaffoldConfigFile(projectRoot, packageType, visibility, nodeVersion, tests);
+export default async function ({projectRoot, vcs, visibility, packageType, tests}) {
+  await scaffoldConfigFile(projectRoot, packageType, visibility, tests, vcs.owner);
 
   return {
     devDependencies: ['travis-lint'],
