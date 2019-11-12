@@ -29,6 +29,7 @@ suite('config scaffolder', () => {
       yamlWriter.default,
       `${projectRoot}/.travis.yml`,
       {
+        version: '~> 1.0',
         language: 'node_js',
         notifications: {email: false},
         before_script: ['npm ls >/dev/null'],
@@ -45,6 +46,7 @@ suite('config scaffolder', () => {
       yamlWriter.default,
       `${projectRoot}/.travis.yml`,
       {
+        version: '~> 1.0',
         language: 'node_js',
         notifications: {email: false},
         before_script: ['npm ls >/dev/null'],
@@ -61,6 +63,7 @@ suite('config scaffolder', () => {
         yamlWriter.default,
         `${projectRoot}/.travis.yml`,
         {
+          version: '~> 1.0',
           language: 'node_js',
           notifications: {email: false},
           before_install: privateNpmTokenInjectionScript,
@@ -88,6 +91,7 @@ suite('config scaffolder', () => {
         yamlWriter.default,
         `${projectRoot}/.travis.yml`,
         {
+          version: '~> 1.0',
           language: 'node_js',
           notifications: {email: false},
           branches: {except: [regexToExcludePublishedVersionTagsFromBuilding]},

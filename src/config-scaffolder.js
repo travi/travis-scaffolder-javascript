@@ -16,6 +16,7 @@ function cleanupInjectedToken() {
 
 export default function (projectRoot, packageType, visibility, nodeVersion, tests) {
   return writeYaml(`${projectRoot}/.travis.yml`, {
+    version: '~> 1.0',
     language: 'node_js',
     notifications: {email: false},
     ...'Package' === packageType && {branches: {except: [publishedVersionRegex]}},
