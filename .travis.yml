@@ -7,10 +7,10 @@ branches:
   - "/^v\\d+\\.\\d+\\.\\d+$/"
 before_script: npm ls >/dev/null
 after_success: npm run coverage:report
-#deploy:
-#  provider: script
-#  edge: true
-#  script: npx semantic-release
+deploy:
+  provider: script
+  edge: true
+  script: npx semantic-release
 env:
   global:
   - FORCE_COLOR=1
