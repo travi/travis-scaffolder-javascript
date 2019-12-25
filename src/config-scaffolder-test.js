@@ -7,7 +7,6 @@ import scaffoldConfig from './config-scaffolder';
 suite('config scaffolder', () => {
   let sandbox;
   const projectRoot = any.string();
-  const colorEnablingEnvironmentVariables = ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always'];
   /* eslint-disable-next-line no-template-curly-in-string */
   const privateNpmTokenInjectionScript = 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc';
   const commonPrivateBeforeScriptScripts = ['rm .npmrc'];
@@ -30,10 +29,9 @@ suite('config scaffolder', () => {
       `${projectRoot}/.travis.yml`,
       {
         version: '~> 1.0',
-        language: 'node_js',
         notifications: {email: false},
-        after_success: 'npm run coverage:report',
-        env: {global: colorEnablingEnvironmentVariables}
+        import: [{source: 'form8ion/.travis-ci:node.yml'}],
+        after_success: 'npm run coverage:report'
       }
     );
   });
@@ -46,9 +44,8 @@ suite('config scaffolder', () => {
       `${projectRoot}/.travis.yml`,
       {
         version: '~> 1.0',
-        language: 'node_js',
         notifications: {email: false},
-        env: {global: colorEnablingEnvironmentVariables}
+        import: [{source: 'form8ion/.travis-ci:node.yml'}]
       }
     );
   });
@@ -62,18 +59,17 @@ suite('config scaffolder', () => {
         `${projectRoot}/.travis.yml`,
         {
           version: '~> 1.0',
-          language: 'node_js',
           notifications: {email: false},
+          import: [{source: 'form8ion/.travis-ci:node.yml'}],
           before_install: privateNpmTokenInjectionScript,
-          before_script: commonPrivateBeforeScriptScripts,
-          env: {global: colorEnablingEnvironmentVariables}
+          before_script: commonPrivateBeforeScriptScripts
         }
       );
     });
   });
 
   suite('package', () => {
-    test('that packages get deployed with semantic-release, but tag builds are excluded', async () => {
+    test('that packages get deployed with semantic-release', async () => {
       const account = any.word();
 
       await scaffoldConfig(projectRoot, 'Package', 'Private', any.simpleObject(), account);
@@ -83,12 +79,13 @@ suite('config scaffolder', () => {
         `${projectRoot}/.travis.yml`,
         {
           version: '~> 1.0',
-          language: 'node_js',
           notifications: {email: false},
+          import: [
+            {source: 'form8ion/.travis-ci:node.yml'},
+            {source: `${account}/.travis-ci:authenticated-semantic-release.yml`}
+          ],
           before_install: privateNpmTokenInjectionScript,
-          before_script: commonPrivateBeforeScriptScripts,
-          import: [{source: `${account}/.travis-ci:authenticated-semantic-release.yml`}],
-          env: {global: colorEnablingEnvironmentVariables}
+          before_script: commonPrivateBeforeScriptScripts
         }
       );
     });
