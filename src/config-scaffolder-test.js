@@ -10,7 +10,7 @@ suite('config scaffolder', () => {
   const colorEnablingEnvironmentVariables = ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always'];
   /* eslint-disable-next-line no-template-curly-in-string */
   const privateNpmTokenInjectionScript = 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc';
-  const commonPrivateBeforeScriptScripts = ['npm ls >/dev/null', 'rm .npmrc'];
+  const commonPrivateBeforeScriptScripts = ['rm .npmrc'];
 
   setup(() => {
     sandbox = sinon.createSandbox();
@@ -32,7 +32,6 @@ suite('config scaffolder', () => {
         version: '~> 1.0',
         language: 'node_js',
         notifications: {email: false},
-        before_script: ['npm ls >/dev/null'],
         after_success: 'npm run coverage:report',
         env: {global: colorEnablingEnvironmentVariables}
       }
@@ -49,7 +48,6 @@ suite('config scaffolder', () => {
         version: '~> 1.0',
         language: 'node_js',
         notifications: {email: false},
-        before_script: ['npm ls >/dev/null'],
         env: {global: colorEnablingEnvironmentVariables}
       }
     );

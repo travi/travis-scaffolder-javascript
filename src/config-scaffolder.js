@@ -21,7 +21,7 @@ export default function (projectRoot, projectType, visibility, tests, account) {
       /* eslint-disable-next-line no-template-curly-in-string */
       before_install: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc'
     },
-    before_script: ['npm ls >/dev/null', privateNpmTokenIsNeeded(visibility) && cleanupInjectedToken()].filter(Boolean),
+    ...privateNpmTokenIsNeeded(visibility) && {before_script: [cleanupInjectedToken()]},
     ...coverageShouldBeReported(visibility, tests) && {after_success: 'npm run coverage:report'},
     ...'Package' === projectType && {import: [{source: `${account}/.travis-ci:authenticated-semantic-release.yml`}]},
     env: {global: ['FORCE_COLOR=1', 'NPM_CONFIG_COLOR=always']}

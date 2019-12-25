@@ -55,6 +55,6 @@
     "write-yaml": "^1.0.0"
   },
   "peerDependencies": {
-    "@travi/javascript-scaffolder": "^8.0.0"
+    "@travi/javascript-scaffolder": "^8.6.0"
   }
 }
