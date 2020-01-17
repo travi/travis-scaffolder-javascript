@@ -27,7 +27,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "files": ["lib/"],
+  "files": [
+    "lib/"
+  ],
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
@@ -58,6 +60,6 @@
     "write-yaml": "^1.0.0"
   },
   "peerDependencies": {
-    "@travi/javascript-scaffolder": "^8.6.0 || 0.0.0-semantically-released || ^9.0.0"
+    "@travi/javascript-scaffolder": "^8.6.0 || ^9.0.0 || ^10.0.0"
   }
 }
