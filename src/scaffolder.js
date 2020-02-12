@@ -16,6 +16,11 @@ export default async function ({projectRoot, vcs, visibility, projectType, tests
           }
         }
       }
-    }
+    },
+    nextSteps: [
+      ...'Private' === visibility
+        ? [{summary: `Add Travis-CI badge from https://travis-ci.com/${vcs.owner}/${vcs.name} to README.md`}]
+        : []
+    ]
   };
 }
