@@ -68,11 +68,32 @@ suite('config scaffolder', () => {
     });
   });
 
-  suite('package', () => {
+  suite('publishing', () => {
     test('that packages get deployed with semantic-release', async () => {
       const account = any.word();
 
       await scaffoldConfig(projectRoot, 'Package', 'Private', any.simpleObject(), account);
+
+      assert.calledWith(
+        yamlWriter.default,
+        `${projectRoot}/.travis.yml`,
+        {
+          version: '~> 1.0',
+          notifications: {email: false},
+          import: [
+            {source: 'form8ion/.travis-ci:node.yml'},
+            {source: `${account}/.travis-ci:authenticated-semantic-release.yml`}
+          ],
+          before_install: privateNpmTokenInjectionScript,
+          before_script: commonPrivateBeforeScriptScripts
+        }
+      );
+    });
+
+    test('that CLI packages get deployed with semantic-release', async () => {
+      const account = any.word();
+
+      await scaffoldConfig(projectRoot, 'CLI', 'Private', any.simpleObject(), account);
 
       assert.calledWith(
         yamlWriter.default,

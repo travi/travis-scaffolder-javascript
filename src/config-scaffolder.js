@@ -12,6 +12,10 @@ function cleanupInjectedToken() {
   return 'rm .npmrc';
 }
 
+function shouldBePublished(projectType) {
+  return 'Package' === projectType || 'CLI' === projectType;
+}
+
 export default function (projectRoot, projectType, visibility, tests, account) {
   return writeYaml(`${projectRoot}/.travis.yml`, {
     version: '~> 1.0',
@@ -22,7 +26,7 @@ export default function (projectRoot, projectType, visibility, tests, account) {
     },
     import: [
       {source: 'form8ion/.travis-ci:node.yml'},
-      ...'Package' === projectType ? [{source: `${account}/.travis-ci:authenticated-semantic-release.yml`}] : []
+      ...shouldBePublished(projectType) ? [{source: `${account}/.travis-ci:authenticated-semantic-release.yml`}] : []
     ],
     ...privateNpmTokenIsNeeded(visibility) && {before_script: [cleanupInjectedToken()]},
     ...coverageShouldBeReported(visibility, tests) && {after_success: 'npm run coverage:report'}
