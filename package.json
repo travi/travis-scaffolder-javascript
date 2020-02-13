@@ -15,7 +15,7 @@
     "lint:travis": "travis-lint .travis.yml",
     "lint:peer": "npm ls >/dev/null",
     "test": "npm-run-all --print-label build --parallel lint:* --parallel test:*",
-    "test:unit:base": "mocha src/**/*-test.js",
+    "test:unit:base": "mocha 'src/**/*-test.js'",
     "test:unit": "nyc run-s test:unit:base",
     "coverage:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "prebuild": "run-s clean",
