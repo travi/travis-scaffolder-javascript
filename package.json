@@ -44,7 +44,7 @@
     "@travi/javascript-scaffolder": "10.22.2",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
-    "codecov": "3.6.5",
+    "codecov": "3.7.0",
     "commitlint-config-travi": "1.3.6",
     "cz-conventional-changelog": "3.2.0",
     "husky": "4.2.5",
