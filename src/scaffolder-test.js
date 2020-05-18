@@ -36,7 +36,7 @@ suite('travis', () => {
         projectType
       }),
       {
-        devDependencies: ['travis-lint'],
+        devDependencies: ['@travi/travis-lint'],
         scripts: {'lint:travis': 'travis-lint .travis.yml'},
         badges: {
           status: {
@@ -57,7 +57,7 @@ suite('travis', () => {
   test('that a badge is not defined and coverage is not reported for a private project', async () => assert.deepEqual(
     await scaffold({projectRoot, vcs, visibility: 'Private'}),
     {
-      devDependencies: ['travis-lint'],
+      devDependencies: ['@travi/travis-lint'],
       scripts: {'lint:travis': 'travis-lint .travis.yml'},
       badges: {status: {}},
       nextSteps: [{summary: `Add Travis-CI badge from https://travis-ci.com/${vcs.owner}/${vcs.name} to README.md`}]

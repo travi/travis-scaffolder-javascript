@@ -4,7 +4,7 @@ export default async function ({projectRoot, vcs, visibility, projectType, tests
   await scaffoldConfigFile(projectRoot, projectType, visibility, tests, vcs.owner);
 
   return {
-    devDependencies: ['travis-lint'],
+    devDependencies: ['@travi/travis-lint'],
     scripts: {'lint:travis': 'travis-lint .travis.yml'},
     badges: {
       status: {
