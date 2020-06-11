@@ -53,7 +53,6 @@ suite('travis', () => {
     assert.calledWith(configScaffolder.default, projectRoot, projectType, visibility, tests, vcs.owner);
   });
 
-
   test('that a badge is not defined and coverage is not reported for a private project', async () => assert.deepEqual(
     await scaffold({projectRoot, vcs, visibility: 'Private'}),
     {
