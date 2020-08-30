@@ -5,7 +5,7 @@ export default async function ({projectRoot, vcs, visibility, projectType, tests
 
   return {
     devDependencies: ['@travi/travis-lint'],
-    scripts: {'lint:travis': 'travis-lint .travis.yml'},
+    scripts: {'disabled:lint:travis': 'travis-lint .travis.yml'},
     badges: {
       status: {
         ...'Public' === visibility && {

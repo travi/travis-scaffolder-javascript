@@ -37,7 +37,7 @@ suite('travis', () => {
       }),
       {
         devDependencies: ['@travi/travis-lint'],
-        scripts: {'lint:travis': 'travis-lint .travis.yml'},
+        scripts: {'disabled:lint:travis': 'travis-lint .travis.yml'},
         badges: {
           status: {
             ci: {
@@ -57,7 +57,7 @@ suite('travis', () => {
     await scaffold({projectRoot, vcs, visibility: 'Private'}),
     {
       devDependencies: ['@travi/travis-lint'],
-      scripts: {'lint:travis': 'travis-lint .travis.yml'},
+      scripts: {'disabled:lint:travis': 'travis-lint .travis.yml'},
       badges: {status: {}},
       nextSteps: [{summary: `Add Travis-CI badge from https://travis-ci.com/${vcs.owner}/${vcs.name} to README.md`}]
     }
