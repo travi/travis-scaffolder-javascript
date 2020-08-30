@@ -12,7 +12,7 @@
   "scripts": {
     "clean": "rimraf lib/",
     "lint:js": "eslint . --cache",
-    "lint:travis": "travis-lint .travis.yml",
+    "disabled:lint:travis": "travis-lint .travis.yml",
     "lint:peer": "npm ls >/dev/null",
     "test": "npm-run-all --print-label build --parallel lint:* --parallel test:*",
     "test:unit:base": "mocha 'src/**/*-test.js'",
