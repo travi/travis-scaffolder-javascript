@@ -1,3 +1,4 @@
+import * as jsCore from '@form8ion/javascript-core';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
@@ -15,8 +16,10 @@ suite('config scaffolder', () => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(yamlWriter, 'default');
+    sandbox.stub(jsCore, 'projectTypeShouldBePublished');
 
     yamlWriter.default.resolves();
+    jsCore.projectTypeShouldBePublished.returns(false);
   });
 
   teardown(() => sandbox.restore());
@@ -69,31 +72,12 @@ suite('config scaffolder', () => {
   });
 
   suite('publishing', () => {
-    test('that packages get deployed with semantic-release', async () => {
+    test('that projects that should be published use semantic-release', async () => {
       const account = any.word();
+      const projectType = any.word();
+      jsCore.projectTypeShouldBePublished.withArgs(projectType).returns(true);
 
-      await scaffoldConfig(projectRoot, 'Package', 'Private', any.simpleObject(), account);
-
-      assert.calledWith(
-        yamlWriter.default,
-        `${projectRoot}/.travis.yml`,
-        {
-          version: '~> 1.0',
-          notifications: {email: false},
-          import: [
-            {source: 'form8ion/.travis-ci:node.yml'},
-            {source: `${account}/.travis-ci:authenticated-semantic-release.yml`}
-          ],
-          before_install: privateNpmTokenInjectionScript,
-          before_script: commonPrivateBeforeScriptScripts
-        }
-      );
-    });
-
-    test('that CLI packages get deployed with semantic-release', async () => {
-      const account = any.word();
-
-      await scaffoldConfig(projectRoot, 'CLI', 'Private', any.simpleObject(), account);
+      await scaffoldConfig(projectRoot, projectType, 'Private', any.simpleObject(), account);
 
       assert.calledWith(
         yamlWriter.default,
