@@ -17,14 +17,18 @@ suite('config scaffolder', () => {
 
     sandbox.stub(yamlWriter, 'default');
     sandbox.stub(jsCore, 'projectTypeShouldBePublished');
+    sandbox.stub(jsCore, 'coverageShouldBeReported');
 
     yamlWriter.default.resolves();
     jsCore.projectTypeShouldBePublished.returns(false);
+    jsCore.coverageShouldBeReported.returns(false);
   });
 
   teardown(() => sandbox.restore());
 
   test('that a base config is created for a javascript project', async () => {
+    jsCore.coverageShouldBeReported.withArgs('Public', {unit: true}).returns(true);
+
     await scaffoldConfig(projectRoot, null, 'Public', {unit: true});
 
     assert.calledWith(

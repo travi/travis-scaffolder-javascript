@@ -1,9 +1,5 @@
-import {projectTypeShouldBePublished} from '@form8ion/javascript-core';
+import {coverageShouldBeReported, projectTypeShouldBePublished} from '@form8ion/javascript-core';
 import writeYaml from '../third-party-wrappers/write-yaml';
-
-function coverageShouldBeReported(visibility, tests) {
-  return 'Public' === visibility && tests.unit;
-}
 
 function privateNpmTokenIsNeeded(visibility) {
   return 'Private' === visibility;
