@@ -12,7 +12,6 @@
   "scripts": {
     "clean": "rimraf lib/",
     "lint:js": "eslint . --cache",
-    "disabled:lint:travis": "travis-lint .travis.yml",
     "lint:peer": "npm ls >/dev/null",
     "test": "npm-run-all --print-label build --parallel lint:* --parallel test:*",
     "test:unit:base": "mocha 'src/**/*-test.js'",
@@ -42,7 +41,6 @@
     "@travi/eslint-config": "1.0.56",
     "@travi/eslint-config-mocha": "1.0.8",
     "@travi/javascript-scaffolder": "11.13.3",
-    "@travi/travis-lint": "1.0.1",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "codecov": "3.8.1",
