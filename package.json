@@ -41,7 +41,7 @@
     "@travi/eslint-config": "1.0.61",
     "@travi/eslint-config-mocha": "1.0.9",
     "@travi/javascript-scaffolder": "12.2.1",
-    "@travi/project-scaffolder": "9.0.4",
+    "@travi/project-scaffolder": "9.0.5",
     "chai": "4.3.0",
     "chai-as-promised": "7.1.1",
     "codecov": "3.8.1",
