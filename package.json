@@ -57,7 +57,7 @@
     "sinon": "10.0.0"
   },
   "dependencies": {
-    "@form8ion/javascript-core": "^2.6.0",
+    "@form8ion/javascript-core": "^2.9.2",
     "write-yaml": "^1.0.0"
   },
   "peerDependencies": {
