@@ -40,7 +40,7 @@
     "@travi/babel-preset": "3.0.53",
     "@travi/eslint-config": "1.0.66",
     "@travi/eslint-config-mocha": "1.0.10",
-    "@travi/javascript-scaffolder": "12.2.9",
+    "@travi/javascript-scaffolder": "12.2.10",
     "@travi/project-scaffolder": "9.0.10",
     "chai": "4.3.4",
     "chai-as-promised": "7.1.1",
