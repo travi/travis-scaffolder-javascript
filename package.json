@@ -40,7 +40,7 @@
     "@travi/babel-preset": "3.0.54",
     "@travi/eslint-config": "1.0.66",
     "@travi/eslint-config-mocha": "1.0.10",
-    "@travi/javascript-scaffolder": "12.2.12",
+    "@travi/javascript-scaffolder": "13.0.1",
     "@travi/project-scaffolder": "10.0.0",
     "chai": "4.3.4",
     "chai-as-promised": "7.1.1",
@@ -61,6 +61,6 @@
     "write-yaml": "^1.0.0"
   },
   "peerDependencies": {
-    "@travi/javascript-scaffolder": "^8.6.0 || ^9.0.0 || ^10.0.0 || ^11.0.0-alpha.1 || ^12.0.0 || ^12.2.6 || ^12.2.7"
+    "@travi/javascript-scaffolder": "^8.6.0 || ^9.0.0 || ^10.0.0 || ^11.0.0-alpha.1 || ^12.0.0 || ^12.2.6 || ^12.2.7 || ^13.0.0"
   }
 }
