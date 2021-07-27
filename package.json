@@ -54,7 +54,7 @@
     "rimraf": "3.0.2",
     "rollup": "2.54.0",
     "rollup-plugin-auto-external": "2.0.0",
-    "sinon": "11.1.1"
+    "sinon": "11.1.2"
   },
   "dependencies": {
     "@form8ion/javascript-core": "^2.9.2",
