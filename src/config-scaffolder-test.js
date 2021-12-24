@@ -17,34 +17,15 @@ suite('config scaffolder', () => {
 
     sandbox.stub(yamlWriter, 'default');
     sandbox.stub(jsCore, 'projectTypeShouldBePublished');
-    sandbox.stub(jsCore, 'coverageShouldBeReported');
 
     yamlWriter.default.resolves();
     jsCore.projectTypeShouldBePublished.returns(false);
-    jsCore.coverageShouldBeReported.returns(false);
   });
 
   teardown(() => sandbox.restore());
 
   test('that a base config is created for a javascript project', async () => {
-    jsCore.coverageShouldBeReported.withArgs('Public', {unit: true}).returns(true);
-
     await scaffoldConfig(projectRoot, null, 'Public', {unit: true});
-
-    assert.calledWith(
-      yamlWriter.default,
-      `${projectRoot}/.travis.yml`,
-      {
-        version: '~> 1.0',
-        notifications: {email: false},
-        import: [{source: 'form8ion/.travis-ci:node.yml'}],
-        after_success: 'npm run coverage:report'
-      }
-    );
-  });
-
-  test('coverage is not reported for a project that isnt unit tested', async () => {
-    await scaffoldConfig(projectRoot, null, 'Public', {unit: false});
 
     assert.calledWith(
       yamlWriter.default,

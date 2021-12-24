@@ -1,4 +1,4 @@
-import {coverageShouldBeReported, projectTypeShouldBePublished} from '@form8ion/javascript-core';
+import {projectTypeShouldBePublished} from '@form8ion/javascript-core';
 import writeYaml from '../third-party-wrappers/write-yaml';
 
 function privateNpmTokenIsNeeded(visibility) {
@@ -23,7 +23,6 @@ export default function (projectRoot, projectType, visibility, tests, account) {
         ? [{source: `${account}/.travis-ci:authenticated-semantic-release.yml`}]
         : []
     ],
-    ...privateNpmTokenIsNeeded(visibility) && {before_script: [cleanupInjectedToken()]},
-    ...coverageShouldBeReported(visibility, tests) && {after_success: 'npm run coverage:report'}
+    ...privateNpmTokenIsNeeded(visibility) && {before_script: [cleanupInjectedToken()]}
   });
 }
