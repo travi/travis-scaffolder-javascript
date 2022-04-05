@@ -27,7 +27,7 @@ jobs:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
       - uses: bahmutov/npm-install@v1
       - run: npm test
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v3
   release:
     needs: verify
     runs-on: ubuntu-latest
