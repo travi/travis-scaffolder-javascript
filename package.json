@@ -26,7 +26,7 @@
     "@travi/any": "2.0.20",
     "@travi/babel-preset": "3.0.87",
     "@travi/eslint-config": "3.0.1",
-    "@travi/eslint-config-mocha": "1.0.17",
+    "@travi/eslint-config-mocha": "1.0.18",
     "c8": "7.11.3",
     "chai": "4.3.6",
     "chai-as-promised": "7.1.1",
