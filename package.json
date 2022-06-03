@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@babel/register": "7.17.7",
-    "@form8ion/javascript": "5.0.0",
+    "@form8ion/javascript": "5.2.0",
     "@travi/any": "2.0.20",
     "@travi/babel-preset": "3.0.87",
     "@travi/eslint-config": "3.0.1",
