@@ -25,7 +25,7 @@
     "@form8ion/javascript": "9.0.3",
     "@travi/any": "2.1.5",
     "@travi/babel-preset": "3.0.93",
-    "@travi/eslint-config": "3.0.7",
+    "@travi/eslint-config": "3.0.8",
     "@travi/eslint-config-mocha": "1.0.19",
     "c8": "7.12.0",
     "chai": "4.3.6",
