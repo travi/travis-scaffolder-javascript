@@ -42,7 +42,7 @@
     "sinon": "14.0.1"
   },
   "dependencies": {
-    "@form8ion/javascript-core": "^7.0.0",
+    "@form8ion/javascript-core": "^8.0.0",
     "write-yaml": "^1.0.0"
   },
   "peerDependencies": {
