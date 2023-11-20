@@ -1,4 +1,4 @@
-import scaffoldConfigFile from './config-scaffolder';
+import scaffoldConfigFile from './config-scaffolder.js';
 
 export default async function ({projectRoot, vcs, visibility, projectType, tests}) {
   await scaffoldConfigFile(projectRoot, projectType, visibility, tests, vcs.owner);
