@@ -1,9 +1,11 @@
 import jsCore from '@form8ion/javascript-core';
+
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
-import * as yamlWriter from '../third-party-wrappers/write-yaml';
-import scaffoldConfig from './config-scaffolder';
+
+import * as yamlWriter from '../third-party-wrappers/write-yaml.js';
+import scaffoldConfig from './config-scaffolder.js';
 
 suite('config scaffolder', () => {
   let sandbox;

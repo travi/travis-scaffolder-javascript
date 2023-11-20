@@ -1,5 +1,6 @@
 import {projectTypeShouldBePublished} from '@form8ion/javascript-core';
-import writeYaml from '../third-party-wrappers/write-yaml';
+
+import writeYaml from '../third-party-wrappers/write-yaml.js';
 
 function privateNpmTokenIsNeeded(visibility) {
   return 'Private' === visibility;
