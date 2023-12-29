@@ -42,7 +42,7 @@
     "write-yaml": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/register": "7.22.15",
+    "@babel/register": "7.23.7",
     "@form8ion/javascript": "11.10.2",
     "@travi/any": "3.0.2",
     "@travi/babel-preset": "3.0.116",
