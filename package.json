@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "@form8ion/javascript-core": "^10.0.0",
+    "@form8ion/javascript-core": "^11.0.0",
     "write-yaml": "^1.0.0"
   },
   "devDependencies": {
