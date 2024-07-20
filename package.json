@@ -59,7 +59,7 @@
     "npm-run-all2": "6.2.2",
     "publint": "0.2.9",
     "rimraf": "6.0.1",
-    "rollup": "4.18.1",
+    "rollup": "4.19.0",
     "rollup-plugin-auto-external": "2.0.0",
     "sinon": "18.0.0"
   },
