@@ -45,7 +45,7 @@
     "@babel/register": "7.24.6",
     "@form8ion/javascript": "12.6.0",
     "@travi/any": "3.1.2",
-    "@travi/babel-preset": "3.0.128",
+    "@travi/babel-preset": "3.0.129",
     "@travi/eslint-config": "5.0.8",
     "@travi/eslint-config-mocha": "1.0.25",
     "c8": "10.1.2",
